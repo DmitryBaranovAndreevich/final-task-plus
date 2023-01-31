@@ -18,6 +18,10 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
+   const error = validationResult(req);
+   console.log(error)
+  if (!error.isEmpty())
+    return res.status(400).json({ messge: "Некорректный URL", error });
   const { userId } = req.params;
   User.findById(userId)
     .orFail(new NotFoundError("Нет пользователя с таким ID"))
