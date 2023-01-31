@@ -6,6 +6,7 @@
 - Node.js в качестве среды выполнения
 
 Регистрация: http://127.0.0.1:3001/signup
+
 POST, {
   email: string,
   password: string
@@ -16,9 +17,11 @@ Responce : {
   _id: string
   email: string
 }
+
 #######################################################
 
 Вход:http://127.0.0.1:3001/signin
+
 POST, {
   email: string,
   password: string
@@ -27,18 +30,22 @@ POST, {
 Responce : {
   token: string
 }
+
 #######################################################
 
 Все пользователи: http://127.0.0.1:3001/users
+
 GET
 Headers {
   Authorization : `Bearer ${token}`
 }
 
 Responce: UserObj[]
+
 #######################################################
 
 Отдельный пользователь: http://127.0.0.1:3001/users/:id
+
 GET
 Headers {
   Authorization : `Bearer ${token}`
@@ -49,4 +56,5 @@ Responce : {
   _id: string
   email: string
 }
+
 #######################################################
