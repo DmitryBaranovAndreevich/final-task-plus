@@ -1,7 +1,7 @@
 class InCorrectDataError extends Error {
   statusCode;
 
-  constructor(error?: Error) {
+  constructor() {
     super('Переданны некорректные данные');
     this.statusCode = 400;
   }

@@ -1,6 +1,6 @@
-import IUser from "../interfaces/user";
-import { Schema, model } from "mongoose";
-import validator from "validator";
+import { Schema, model } from 'mongoose';
+import validator from 'validator';
+import IUser from '../interfaces/user';
 
 const userShema = new Schema<IUser>({
   password: {
@@ -14,9 +14,9 @@ const userShema = new Schema<IUser>({
     unique: true,
     validate: {
       validator: (v: string) => validator.isEmail(v),
-      message: "Некорректный адрес почты",
+      message: 'Некорректный адрес почты',
     },
   },
 });
 
-export default model("user", userShema);
+export default model('user', userShema);
