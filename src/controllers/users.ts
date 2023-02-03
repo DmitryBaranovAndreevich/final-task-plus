@@ -8,6 +8,7 @@ import IUser from '../interfaces/user';
 import EmailDuplicate from '../errors/emailDuplicate';
 import NotFoundError from '../errors/notFoundError';
 import InCorrectPassword from '../errors/incorrectPassword';
+import createToken from '../helpers/createToken';
 
 const { JWT_SECRET = 'dev-key' } = process.env;
 
@@ -36,10 +37,8 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
     .orFail(new NotFoundError('Нет пользователя с таким email'))
     .then((user) => bcrypt.compare(password, user.password).then((matched) => {
       if (!matched) throw new InCorrectPassword();
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: '2h',
-      });
-      res.send({ token }).end();
+      const token = createToken(user._id);
+      res.send({ token, user }).end();
     }))
     .catch(next);
 };
@@ -55,7 +54,13 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
     .then((hash: string) => User.create({ ...any, password: hash }))
     .then((user: IUser) => {
       if (!user) throw new Error('NotValidData');
-      res.send(user);
+      const token = createToken(user._id as string);
+      res
+      .send({
+        '_id': user._id,
+        'email': user.email,
+        'token': token
+      });
     })
     .catch((err: { message: string; code: number }) => {
       if (err.code === 11000) next(new EmailDuplicate());
