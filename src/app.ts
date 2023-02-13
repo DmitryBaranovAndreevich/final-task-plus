@@ -7,6 +7,7 @@ import { createUser, login } from "./controllers/users";
 import auth from "./middlewares/auth";
 import errorHandler from "./helpers/errorhandler";
 import cors from "cors";
+import { getFeedbacks } from "./controllers/feedback";
 
 const {
   PORT = 3001,
@@ -46,6 +47,8 @@ app.post(
   ],
   createUser
 );
+
+app.get("/feedbacks", getFeedbacks);
 
 // app.use(auth);
 app.use("/users", auth, userRouter);

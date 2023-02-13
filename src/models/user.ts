@@ -3,6 +3,14 @@ import validator from 'validator';
 import IUser from '../interfaces/user';
 
 const userShema = new Schema<IUser>({
+  name: {
+    type: String,
+    minlength: 2,
+    required: true,
+  },
+  image: {
+    type: String
+  },
   password: {
     type: String,
     minlength: 2,
@@ -14,9 +22,9 @@ const userShema = new Schema<IUser>({
     unique: true,
     validate: {
       validator: (v: string) => validator.isEmail(v),
-      message: 'Некорректный адрес почты',
+      message: "Некорректный адрес почты",
     },
   },
 });
 
-export default model('user', userShema);
+export default model<IUser>('user', userShema);
