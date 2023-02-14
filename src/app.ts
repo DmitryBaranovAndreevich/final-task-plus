@@ -6,26 +6,23 @@ import userRouter from "./routes/user";
 import { createUser, login } from "./controllers/users";
 import auth from "./middlewares/auth";
 import errorHandler from "./helpers/errorhandler";
-import cors from "cors";
+import cors from "./middlewares/cors";
 import { getFeedbacks } from "./controllers/feedback";
+import filePath from "./middlewares/filePath";
+import path from "path";
 
 const {
   PORT = 3001,
   MONGOOSE = "mongodb+srv://administrator:96b-Rur-whx-Biv@cluster0.c7n1eme.mongodb.net/final-task?retryWrites=true&w=majority",
 } = process.env;
 
+
 const app = express();
 
-app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-app.use(function (req, res, next) {
-  res.header({
-    "Access-Control-Allow-Origin": "http://localhost:3000",
-    "Access-Control-Allow-Credentials": true,
-  });
-  next();
-});
+app.use(cors);
+app.use(filePath(path.resolve(__dirname, '/')));
 mongoose.connect(MONGOOSE);
 app.post(
   "/signin",
