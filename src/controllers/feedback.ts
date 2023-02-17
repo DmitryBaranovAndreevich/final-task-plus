@@ -20,13 +20,25 @@ export const createFeedbacks = (
   res: Response,
   next: NextFunction
 ) => {
-  if (!("email" in req.body && "content" in req.body))
+  if (!("owner" in req.body && "content" in req.body && "avatar" in req.body))
     throw new InCorrectDataError();
-  const { email, content } = req.body;
-  User.findOne({ email })
-    .orFail(new NotFoundError("Нет пользователя с таким ID"))
-    .then((user: IUser) => user._id)
-    .then((_id) => Feedback.create({owner: _id , content: content}))
-    .then(feed => res.send(feed))
-    .catch(next)
+  const { avatar, content, owner } = req.body;
+  Feedback.find()
+    .then(async (res) => {
+      const feedback = res.find((el) => el.owner === owner);
+      if (feedback) {
+        await Feedback.findByIdAndRemove(feedback._id);
+      }
+      return Feedback.create({
+        owner: owner,
+        content: content,
+        image: avatar,
+      });
+    })
+    .then((feed) => Feedback.find({}))
+    .then((feeds) => {
+      console.log(feeds);
+      res.send(feeds);
+    })
+    .catch(next);
 };

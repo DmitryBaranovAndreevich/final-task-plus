@@ -49,6 +49,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 
 export const createUser = (req: Request, res: Response, next: NextFunction) => {
   const error = validationResult(req);
+   console.log(error);
   if (!error.isEmpty())
     return res.status(400).json({ messge: "Ошибка при регистрации", error });
   if (!("email" in req.body && "password" in req.body && "name" in req.body))

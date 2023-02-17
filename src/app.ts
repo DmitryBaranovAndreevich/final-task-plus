@@ -6,10 +6,8 @@ import userRouter from "./routes/user";
 import { createUser, login } from "./controllers/users";
 import auth from "./middlewares/auth";
 import errorHandler from "./helpers/errorhandler";
-import cors from "./middlewares/cors";
-import { getFeedbacks } from "./controllers/feedback";
-import filePath from "./middlewares/filePath";
-import path from "path";
+import feedbackRouter from "./routes/feedback";
+import cors from 'cors';
 
 const {
   PORT = 3001,
@@ -18,11 +16,15 @@ const {
 
 
 const app = express();
-
+app.use(
+  cors({
+    origin: "*",
+    credentials: true, //access-control-allow-credentials:true
+    optionsSuccessStatus: 200
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors);
-app.use(filePath(path.resolve(__dirname, '/')));
 mongoose.connect(MONGOOSE);
 app.post(
   "/signin",
@@ -45,7 +47,7 @@ app.post(
   createUser
 );
 
-app.get("/feedbacks", getFeedbacks);
+app.use("/feedbacks", feedbackRouter);
 
 // app.use(auth);
 app.use("/users", auth, userRouter);
