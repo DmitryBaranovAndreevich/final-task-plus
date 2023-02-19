@@ -8,6 +8,7 @@ import auth from "./middlewares/auth";
 import errorHandler from "./helpers/errorhandler";
 import feedbackRouter from "./routes/feedback";
 import cors from 'cors';
+import { senMail } from "./controllers/sendMail";
 
 const {
   PORT = 3001,
@@ -47,10 +48,12 @@ app.post(
   createUser
 );
 
+app.post("/sendmail", senMail);
+
 app.use("/feedbacks", feedbackRouter);
 
 // app.use(auth);
-app.use("/users", auth, userRouter);
+app.use("/users", userRouter);
 
 app.use(errorHandler);
 

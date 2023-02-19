@@ -37,7 +37,6 @@ export const createFeedbacks = (
     })
     .then((feed) => Feedback.find({}))
     .then((feeds) => {
-      console.log(feeds);
       res.send(feeds);
     })
     .catch(next);

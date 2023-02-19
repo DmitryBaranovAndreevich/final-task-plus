@@ -41,7 +41,8 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
       bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) throw new InCorrectPassword();
         const token = createToken(user._id);
-        res.send({ token, user }).end();
+        const {name, image, email, _id} = user;
+        res.send({ token, user: { name, image, email, _id } }).end();
       })
     )
     .catch(next);
@@ -49,7 +50,6 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 
 export const createUser = (req: Request, res: Response, next: NextFunction) => {
   const error = validationResult(req);
-   console.log(error);
   if (!error.isEmpty())
     return res.status(400).json({ messge: "Ошибка при регистрации", error });
   if (!("email" in req.body && "password" in req.body && "name" in req.body))
