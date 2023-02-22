@@ -9,10 +9,15 @@ import errorHandler from "./helpers/errorhandler";
 import feedbackRouter from "./routes/feedback";
 import cors from 'cors';
 import { senMail } from "./controllers/sendMail";
+import fs from "fs";
+import https from "https";
 const {
   PORT = 3001,
   MONGOOSE = "mongodb+srv://administrator:96b-Rur-whx-Biv@cluster0.c7n1eme.mongodb.net/final-task?retryWrites=true&w=majority",
 } = process.env;
+const privateKey = fs.readFileSync("./privkey.pem");
+const certificate = fs.readFileSync("./fullchain.pem");
+const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
 app.use(
@@ -55,6 +60,9 @@ app.use("/users", userRouter);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
