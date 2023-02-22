@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { Error } from "mongoose";
 import cookieParser from "cookie-parser";
 import { check } from "express-validator";
 import userRouter from "./routes/user";
@@ -9,12 +9,10 @@ import errorHandler from "./helpers/errorhandler";
 import feedbackRouter from "./routes/feedback";
 import cors from 'cors';
 import { senMail } from "./controllers/sendMail";
-
 const {
-  PORT = 3001,
+  PORT = 443,
   MONGOOSE = "mongodb+srv://administrator:96b-Rur-whx-Biv@cluster0.c7n1eme.mongodb.net/final-task?retryWrites=true&w=majority",
 } = process.env;
-
 
 const app = express();
 app.use(
