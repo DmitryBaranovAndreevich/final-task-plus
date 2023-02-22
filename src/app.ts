@@ -12,7 +12,7 @@ import { senMail } from "./controllers/sendMail";
 import fs from "fs";
 import https from "https";
 const {
-  PORT = 80,
+  PORT = 443,
   MONGOOSE = "mongodb+srv://administrator:96b-Rur-whx-Biv@cluster0.c7n1eme.mongodb.net/final-task?retryWrites=true&w=majority",
 } = process.env;
 const privateKey = fs.readFileSync("./privkey.pem");
