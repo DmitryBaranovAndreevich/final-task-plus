@@ -10,7 +10,7 @@ import feedbackRouter from "./routes/feedback";
 import cors from 'cors';
 import { senMail } from "./controllers/sendMail";
 const {
-  PORT = 443,
+  PORT = 3001,
   MONGOOSE = "mongodb+srv://administrator:96b-Rur-whx-Biv@cluster0.c7n1eme.mongodb.net/final-task?retryWrites=true&w=majority",
 } = process.env;
 
