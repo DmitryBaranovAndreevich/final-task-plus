@@ -64,5 +64,5 @@ app.use(errorHandler);
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+  console.log(`httpsServer listening on port ${PORT}`);
 });
