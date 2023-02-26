@@ -5,22 +5,26 @@
 - Mongodb и ODM Mongoose для хранения данных пользователей
 - Node.js в качестве среды выполнения
 
-Регистрация: http://127.0.0.1:3001/signup
+Регистрация: https://final-task.ru/signup
 
 POST, {
+  name: string,
+  image?: string
   email: string,
   password: string
 }
 
 Responce : {
-  password: string
+  name: string
   _id: string
   email: string
+  avatar: string
+  token: string
 }
 
 #######################################################
 
-Вход:http://127.0.0.1:3001/signin
+Вход: https://final-task.ru/signin
 
 POST, {
   email: string,
@@ -29,27 +33,27 @@ POST, {
 
 Responce : {
   token: string
+  user: {
+    name: string
+    image: string
+    email: string
+    _id: string
+  }
 }
 
 #######################################################
 
-Все пользователи: http://127.0.0.1:3001/users
+Все пользователи: https://final-task.ru/users
 
 GET
-Headers {
-  Authorization : `Bearer ${token}`
-}
 
 Responce: UserObj[]
 
 #######################################################
 
-Отдельный пользователь: http://127.0.0.1:3001/users/:id
+Отдельный пользователь: https://final-task.ru/users/:id
 
 GET
-Headers {
-  Authorization : `Bearer ${token}`
-}
 
 Responce : {
   password: string
@@ -58,3 +62,25 @@ Responce : {
 }
 
 #######################################################
+Отзывы: https://final-task.ru/feedbacks
+
+GET
+
+Responce : Feedacks[]
+########################################################
+
+Создать отзыв: https://final-task.ru/feedbacks
+
+POST, {
+  avatar?: string,
+  content: string,
+  owner: string
+}
+
+##########################################################
+ОТправить email: https://final-task.ru/sendmail
+POST, {
+  to: string, email
+}
+
+##########################################################
