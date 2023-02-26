@@ -62,11 +62,13 @@ Responce : {
 }
 
 #######################################################
+
 Отзывы: https://final-task.ru/feedbacks
 
 GET
 
 Responce : Feedacks[]
+
 ########################################################
 
 Создать отзыв: https://final-task.ru/feedbacks
@@ -78,7 +80,8 @@ POST, {
 }
 
 ##########################################################
-ОТправить email: https://final-task.ru/sendmail
+
+Отправить email: https://final-task.ru/sendmail
 POST, {
   to: string, email
 }
