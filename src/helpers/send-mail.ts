@@ -1,11 +1,10 @@
-import dotenv from "dotenv";
-import IMailObj from "interfaces/mailObj";
+import IMailObj from "../interfaces/mailObj";
 import { Error } from "mongoose";
 import nodemailer from "nodemailer";
-import path from "path";
+import htmlTemplate from "./html";
 
 const sendEmail = async (mailObj: IMailObj) => {
-  const { to, subject, text } = mailObj;
+  const { to } = mailObj;
 
   try {
     const transporter = nodemailer.createTransport(
@@ -15,27 +14,20 @@ const sendEmail = async (mailObj: IMailObj) => {
         secure: true,
         auth: {
           user: "final.task@mail.ru",
-          pass: "KGa0RKtSi81yHQ1QhdTm", //KGa0RKtSi81yHQ1QhdTm
+          pass: "nLwiDtPaPZ210ZaAxNdW", //ueIpTrO*Ot23
         },
       },
       {
-        from: '<final.task@mail.ru>',
+        from: "<final.task@mail.ru>",
       }
     );
 
     const info = await transporter.sendMail({
       from: "final.task@mail.ru",
       to: to,
-      subject: subject,
-      text: text,
-      html: `<div style="text-align: center;">
-  <h1 style="color: #3584c8;">Team of creative Front-Back Developers</h1>
-  <p>
-   Our team sends you greetings and wishes you all the best
-    <br />
-    🤗 🤗 🤗 🤗 🤗 🤗
-  </p>
-</div>`,
+      subject: "Letter from RS Clone",
+      text: "Our team sends you greetings and wishes you all the best",
+      html: htmlTemplate,
     });
     console.log(`Message sent: ${info.messageId}`);
     return `Message sent: ${info.messageId}`;

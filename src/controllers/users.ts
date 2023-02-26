@@ -21,7 +21,7 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
   const error = validationResult(req);
   if (!error.isEmpty())
-    return res.status(400).json({ messge: "Некорректный URL", error });
+    return res.status(400).json({ message: "Некорректный URL", error });
   const { userId } = req.params;
   return User.findById(userId)
     .orFail(new NotFoundError("Нет пользователя с таким ID"))
@@ -32,7 +32,7 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
 export const login = (req: Request, res: Response, next: NextFunction) => {
   const error = validationResult(req);
   if (!error.isEmpty())
-    return res.status(400).json({ messge: "Ошибка при регистрации", error });
+    return res.status(400).json({ message: "Ошибка при регистрации", error });
   const { email, password } = req.body;
   return User.findOne({ email })
     .select("+password")
@@ -51,7 +51,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 export const createUser = (req: Request, res: Response, next: NextFunction) => {
   const error = validationResult(req);
   if (!error.isEmpty())
-    return res.status(400).json({ messge: "Ошибка при регистрации", error });
+    return res.status(400).json({ message: "Ошибка при регистрации", error });
   if (!("email" in req.body && "password" in req.body && "name" in req.body))
     throw new InCorrectDataError();
 
